@@ -11,15 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.comments {
-  width: 96%;
-  height: 90px;
-  padding: 2%;
-  font-size: 1.2em;
-}
-
-.ui.two.buttons {
-  width: 17%;
-  float: right;
-}

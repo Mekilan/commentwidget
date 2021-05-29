@@ -1,0 +1,17 @@
+.comments {
+  width: 96%;
+  height: 90px;
+  padding: 2%;
+  font-size: 1.2em;
+}
+
+.ui.two.buttons {
+  width: 17%;
+  float: right;
+}
+.txt-a-box {
+  padding-top: 6px;
+}
+.btn-sz {
+  margin: 15px 0px 0px 0px;
+}

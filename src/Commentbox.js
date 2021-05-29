@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+
 var arrdata = [];
 class Commentbox extends Component {
     constructor(props) {
@@ -9,12 +10,14 @@ class Commentbox extends Component {
         this.state = {
             commentval: "",
             id: 0,
-            commentdata: []
+            commentdata: [],
+            mode: 'add',
+            unqid: null
         };
     }
     componentDidMount() {
         axios.get('https://randomuser.me/api/').then(res => {
-
+            console.log(res);
         });
     }
     onComment = (evt) => {
@@ -22,16 +25,23 @@ class Commentbox extends Component {
     }
     onCommentClick = () => {
         debugger;
-        let arr = [];
-        let commenttext = this.state.commentval;
-        let id = this.state.id
-        let commentobj = { comment: commenttext, unqid: id };
-        arrdata.push(commentobj);
-        this.setState({ commentdata: arrdata, commentval: '' });
+        if (this.state.mode === 'add') {
+            let commenttext = this.state.commentval;
+            let id = this.state.id
+            let commentobj = { comment: commenttext, unqid: id };
+            arrdata.push(commentobj);
+            this.setState({ commentdata: arrdata, commentval: '' });
+        }
+        else {
+            let id = this.state.unqid;
+            let filterdata = this.state.commentdata.filter(item => { return item.unqid === parseInt(id) });
+            filterdata[0].comment = this.state.commentval;
+            this.setState({ commentdata: this.state.commentdata, commentval: '', mode: 'add' });
+        }
     }
     editClick = (evt) => {
         debugger;
-        this.setState({ commentval: evt.target.id });
+        this.setState({ commentval: evt.target.dataset.comment, unqid: evt.target.dataset.id, mode: 'edit' });
     }
     deleteClick = (evt) => {
         debugger;
@@ -48,7 +58,7 @@ class Commentbox extends Component {
                         <div className="description">
                             {commentdata.comment}
                             <div className="ui two buttons">
-                                <div className="ui basic green button" id={commentdata.comment} onClick={this.editClick}>Edit</div>
+                                <div className="ui basic green button" data-comment={commentdata.comment} data-id={commentdata.unqid} onClick={this.editClick}>Edit</div>
                                 <div className="ui basic red button" id={commentdata.unqid} onClick={this.deleteClick}>Delete</div>
                             </div>
                         </div>
@@ -59,9 +69,9 @@ class Commentbox extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className="">
+                <div className="txt-a-box">
                     <textarea name="comments" id="comments" className="comments" onChange={this.onComment} value={this.state.commentval} />
-                    <button className="ui basic green button" onClick={this.onCommentClick}>Submit</button>
+                    <button className="ui basic green button btn-sz" onClick={this.onCommentClick}>Submit</button>
                 </div>
                 <div className="ui relaxed divided list">
                     {this.state.commentdata.length !== 0 ?
