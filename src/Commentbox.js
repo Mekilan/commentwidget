@@ -24,7 +24,6 @@ class Commentbox extends Component {
         this.setState({ commentval: evt.target.value, id: this.state.id + 1 });
     }
     onCommentClick = () => {
-        debugger;
         if (this.state.mode === 'add') {
             let commenttext = this.state.commentval;
             let id = this.state.id
@@ -40,11 +39,9 @@ class Commentbox extends Component {
         }
     }
     editClick = (evt) => {
-        debugger;
         this.setState({ commentval: evt.target.dataset.comment, unqid: evt.target.dataset.id, mode: 'edit' });
     }
     deleteClick = (evt) => {
-        debugger;
         let filterdata = this.state.commentdata.filter(item => { return item.unqid !== parseInt(evt.target.id) });
         arrdata = filterdata;
         this.setState({ commentdata: filterdata });
